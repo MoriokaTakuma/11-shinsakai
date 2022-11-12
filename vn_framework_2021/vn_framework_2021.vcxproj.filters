@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="framework">
+      <UniqueIdentifier>{aa67051f-b1c3-4cb6-8ce8-1a201f004e31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework\directX">
+      <UniqueIdentifier>{f1b7bef6-65ad-4a42-ab9b-1fa4055d55ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework\directX\WICTextureLoader">
+      <UniqueIdentifier>{5b348a72-f3f9-4519-8a04-979a169607a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public">
+      <UniqueIdentifier>{fe9cb867-6203-4334-abdc-3d82e466d433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public\object">
+      <UniqueIdentifier>{8cbb51c2-bfd0-4525-b41d-d00432eca2a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public\scene">
+      <UniqueIdentifier>{b565337e-1efe-4a2a-88e2-a8d751ad0910}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shader">
+      <UniqueIdentifier>{94183541-d2cd-4558-b56f-55e0ab20936b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="vn_framework_2021.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\vn_environment.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\vn_Font.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\vn_joystick.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\vn_keyboard.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\vn_mainframe.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\vn_mouse.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\vn_sound.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\directX\vn_Direct2D.h">
+      <Filter>framework\directX</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\directX\vn_Direct3D.h">
+      <Filter>framework\directX</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\directX\vn_DirectInput.h">
+      <Filter>framework\directX</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\directX\vn_DirectSound.h">
+      <Filter>framework\directX</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\directX\vn_shader.h">
+      <Filter>framework\directX</Filter>
+    </ClInclude>
+    <ClInclude Include="public\vn_sprite.h">
+      <Filter>public</Filter>
+    </ClInclude>
+    <ClInclude Include="public\scene\scene_boot.h">
+      <Filter>public\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="public\scene\scene_joystick_test.h">
+      <Filter>public\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="public\scene\scene_se_test.h">
+      <Filter>public\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="public\scene\vn_scene.h">
+      <Filter>public\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="public\scene\vn_sceneTable.h">
+      <Filter>public\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="public\scene\scene_font_test.h">
+      <Filter>public\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="public\scene\scene_sprite_test.h">
+      <Filter>public\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="public\scene\scene_priority_test.h">
+      <Filter>public\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="public\scene\scene_action_test.h">
+      <Filter>public\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="public\scene\scene_block_test.h">
+      <Filter>public\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="public\object\block2D.h">
+      <Filter>public\object</Filter>
+    </ClInclude>
+    <ClInclude Include="public\object\player2D.h">
+      <Filter>public\object</Filter>
+    </ClInclude>
+    <ClInclude Include="public\object\item2D.h">
+      <Filter>public\object</Filter>
+    </ClInclude>
+    <ClInclude Include="public\scene\SceneGame.h">
+      <Filter>public\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="public\scene\scene_title.h">
+      <Filter>public\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="public\scene\scene_gameover.h">
+      <Filter>public\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="public\scene\scene_gameclear.h">
+      <Filter>public\scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="vn_framework_2021.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\vn_Font.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\vn_joystick.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\vn_keyboard.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\vn_mainframe.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\vn_mouse.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\vn_sound.cpp">
+      <Filter>framework</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\directX\vn_Direct2D.cpp">
+      <Filter>framework\directX</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\directX\vn_Direct3D.cpp">
+      <Filter>framework\directX</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\directX\vn_DirectInput.cpp">
+      <Filter>framework\directX</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\directX\vn_DirectSound.cpp">
+      <Filter>framework\directX</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\directX\vn_shader.cpp">
+      <Filter>framework\directX</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\directX\WICTextureLoader\WICTextureLoader.cpp">
+      <Filter>framework\directX\WICTextureLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="public\vn_sprite.cpp">
+      <Filter>public</Filter>
+    </ClCompile>
+    <ClCompile Include="public\scene\scene_boot.cpp">
+      <Filter>public\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="public\scene\scene_joystick_test.cpp">
+      <Filter>public\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="public\scene\scene_se_test.cpp">
+      <Filter>public\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="public\scene\vn_scene.cpp">
+      <Filter>public\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="public\scene\vn_sceneTable.cpp">
+      <Filter>public\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="public\scene\scene_font_test.cpp">
+      <Filter>public\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="public\scene\scene_sprite_test.cpp">
+      <Filter>public\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="public\scene\scene_priority_test.cpp">
+      <Filter>public\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="public\scene\scene_action_test.cpp">
+      <Filter>public\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="public\scene\scene_block_test.cpp">
+      <Filter>public\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="public\object\block2D.cpp">
+      <Filter>public\object</Filter>
+    </ClCompile>
+    <ClCompile Include="public\object\player2D.cpp">
+      <Filter>public\object</Filter>
+    </ClCompile>
+    <ClCompile Include="public\object\item2D.cpp">
+      <Filter>public\object</Filter>
+    </ClCompile>
+    <ClCompile Include="public\scene\SceneGame.cpp">
+      <Filter>public\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="public\scene\scene_title.cpp">
+      <Filter>public\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="public\scene\scene_gameover.cpp">
+      <Filter>public\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="public\scene\scene_gameclear.cpp">
+      <Filter>public\scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="vn_framework_2021.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="vn_framework_2021.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shader\ps_2d.psh">
+      <Filter>shader</Filter>
+    </FxCompile>
+    <FxCompile Include="shader\vs_2d.vsh">
+      <Filter>shader</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

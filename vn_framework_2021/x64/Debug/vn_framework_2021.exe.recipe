@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\x64\Debug\vn_framework_2021.exe</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\shader\ps_2d.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\shader\vs_2d.cso</FullPath>
+    </ContentFile>
+  </ContentFiles>
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>
