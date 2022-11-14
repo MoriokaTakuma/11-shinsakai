@@ -20,7 +20,7 @@ float bg_offset_y;
 #define PL_MOVE_LIMIT_U 100.0f
 #define PL_MOVE_LIMIT_D 650.0f
 #define PL_DASH_MAX		15.0f
-#define PL_MOVE_X_SPD   10.0f
+#define PL_MOVE_X_SPD   5.0f
 #define PL_MOVE_Y_SPD   (PL_MOVE_X_SPD/2.0f)
 #define PL_DASH_SPD     0.2
 #define PL_JUMP_SPD     5.0f
@@ -42,9 +42,11 @@ int   pl_anim_pat;
 int   pl_muteki_cnt;
 int   pl_hp;
 
+
 //武器関係
 bool  pl_attack;
-float attck_anim;
+int attck_anim;
+int attck_count = 2;
 int pl_weapon_rot;
 int pl_weapon_rot_add;
 
@@ -220,17 +222,32 @@ void SceneGame::execute()
 
 	//移動関連
 	pl_vec = 0;
-	if (vnKeyboard::on(DIK_LEFT))
+	if (vnKeyboard::on(DIK_A))
 	{
 		player_global_x -= PL_MOVE_X_SPD;
 		pl_vec = -1;
+		if (vnKeyboard::on(DIK_LSHIFT))
+		{
+			player_global_x -= PL_MOVE_X_SPD/2;
+			pl_vec = -1;
+		}
 	}
-	if (vnKeyboard::on(DIK_RIGHT))
+	if (vnKeyboard::on(DIK_D))
 	{
 		player_global_x += PL_MOVE_X_SPD;
 		pl_vec = 1;
-
+		if (vnKeyboard::on(DIK_LSHIFT))
+		{
+			player_global_x += PL_MOVE_X_SPD/2;
+			pl_vec = 1;
+		}
 	}
+	if (vnKeyboard::on(DIK_LSHIFT))//ダッシュフラグ
+	{
+		if (!pl_dash)
+			pl_dash = true;
+	}
+	else pl_dash = false;
 	/*
 	if (vnKeyboard::on(DIK_UP))
 	{
@@ -250,17 +267,14 @@ void SceneGame::execute()
 			pl_jump_r = 0.0f;
 		}
 	}
-	if (vnKeyboard::on(DIK_LSHIFT))////////////////////////
-	{
-		if (!pl_dash)
-			pl_dash = true;
-	}
+	
 	if (vnKeyboard::trg(DIK_F))
 	{
-		if (!pl_attack)
+		if (!pl_attack)  //   攻撃アニメーション	 テスト
 		{
 			pl_attack = true;
-			/*if (pPlayer->scaleX > 0.0f)
+			/*
+			if (pPlayer->scaleX > 0.0f)
 			{
 				pl_weapon_rot = 240;
 				pl_weapon_rot_add = 10;
@@ -269,25 +283,51 @@ void SceneGame::execute()
 			{
 				pl_weapon_rot = 300;
 				pl_weapon_rot_add = -10;
-			}*/
+			}
+			*/
 			pAttackSE->play();
 		}
 	}
-	
-	if (pl_vec != 0)
-	{																									   
+	if (pl_attack)
+	{
 		pPlayer->vtx[0].u =                                                      //vtx[0].u = 左上のuの座標
-	    pPlayer->vtx[2].u = 0.0f + (float)(pl_anim_pat / 8 % 8 % 4) * 0.125f;    //vtx[2].u = 左下のuの座標
+		pPlayer->vtx[2].u = 0.0f;    //vtx[2].u = 左下のuの座標
 		pPlayer->vtx[1].u =                                                      //vtx[1].u = 右上のuの座標
-		pPlayer->vtx[3].u = 0.125f + (float)(pl_anim_pat / 8 % 8 % 4) * 0.125;   //vtx[3].u = 右下のuの座標
-																										   
+		pPlayer->vtx[3].u = 0.125f;  //vtx[3].u = 右下のuの座標
+
 		pPlayer->vtx[0].v =                                                      //vtx[0].v = 左上のvの座標      
-		pPlayer->vtx[1].v = 0.375f + (float)(pl_anim_pat / 8 % 8 % 4) + 0.125f;  //vtx[1].v = 右上のvの座標
+		pPlayer->vtx[1].v = 0.5f;    //vtx[1].v = 右上のvの座標
 		pPlayer->vtx[2].v =                                                      //vtx[2].v = 左下のvの座標
-	    pPlayer->vtx[3].v = 0.5f + (float)(pl_anim_pat / 8 % 8 % 4) + 0.125f;    //vtx[3].v = 右下のvの座標
+		pPlayer->vtx[3].v = 0.625f;  //vtx[3].v = 右下のvの座標
 		pPlayer->scaleX = (float)pl_vec;
 	}
-	else
+	if (pl_vec != 0)//移動アニメーション
+	{																									   
+		pPlayer->vtx[0].u =                                                      //vtx[0].u = 左上のuの座標
+	    pPlayer->vtx[2].u = 0.0f + (float)(pl_anim_pat / 8 % 8 % 8) * 0.125f;    //vtx[2].u = 左下のuの座標
+		pPlayer->vtx[1].u =                                                      //vtx[1].u = 右上のuの座標
+		pPlayer->vtx[3].u = 0.125f + (float)(pl_anim_pat / 8 % 8 % 8) * 0.125;   //vtx[3].u = 右下のuの座標
+																										   
+		pPlayer->vtx[0].v =                                                      //vtx[0].v = 左上のvの座標      
+		pPlayer->vtx[1].v = 0.375f + (float)(pl_anim_pat / 8 % 8 % 8) + 0.125f;  //vtx[1].v = 右上のvの座標
+		pPlayer->vtx[2].v =                                                      //vtx[2].v = 左下のvの座標
+	    pPlayer->vtx[3].v = 0.5f + (float)(pl_anim_pat / 8 % 8 % 8) + 0.125f;    //vtx[3].v = 右下のvの座標
+		pPlayer->scaleX = (float)pl_vec;
+		if (pl_dash)//ダッシュアニメーション
+		{
+			pPlayer->vtx[0].u =                                                      //vtx[0].u = 左上のuの座標
+			pPlayer->vtx[2].u = 0.0f + (float)(pl_anim_pat / 8 % 8 % 4) * 0.125f;    //vtx[2].u = 左下のuの座標
+			pPlayer->vtx[1].u =                                                      //vtx[1].u = 右上のuの座標
+			pPlayer->vtx[3].u = 0.125f + (float)(pl_anim_pat / 8 % 8 % 4) * 0.125;   //vtx[3].u = 右下のuの座標
+
+			pPlayer->vtx[0].v =                                                      //vtx[0].v = 左上のvの座標      
+			pPlayer->vtx[1].v = 0.0f + (float)(pl_anim_pat / 8 % 8 % 4) + 0.125;	 //vtx[1].v = 右上のvの座標
+			pPlayer->vtx[2].v =                                                      //vtx[2].v = 左下のvの座標
+			pPlayer->vtx[3].v = 0.125f + (float)(pl_anim_pat / 8 % 8 % 4) + 0.125;   //vtx[3].v = 右下のvの座標
+			pPlayer->scaleX = (float)pl_vec;
+		}
+	}
+	else//立ち絵
 	{
 		pPlayer->vtx[0].u =
 		pPlayer->vtx[2].u = 0.25f;
@@ -300,7 +340,6 @@ void SceneGame::execute()
 		pPlayer->vtx[3].v = 0.625;
 	}
 	pl_anim_pat++;
-
 
 	//ワールド座標で左右の端を超えた際の処理
 	if ((player_global_x - pPlayer->sizeX / 2.0f) < 0.0f)
@@ -322,7 +361,7 @@ void SceneGame::execute()
 
 	if (tmp_pl_pos_x < MOVE_L_LIMIT && bg_offset_x < pBg->sizeX / 2.0f - PL_MOVE_X_SPD)
 	{
-		bg_offset_x += PL_MOVE_X_SPD;
+		bg_offset_x += PL_MOVE_X_SPD * 1.5;
 	}
 	if (tmp_pl_pos_x > SCREEN_CENTER_X && bg_offset_x > PL_MOVE_X_SPD)
 	{
@@ -339,6 +378,8 @@ void SceneGame::execute()
 		bg_offset_y += PL_MOVE_Y_SPD;
 	}
 	*/
+
+
 	//プレイヤー位置情報更新
 	pPlayer->posX = player_global_x + bg_offset_x - pBg->sizeX / 2.0f;
 	pPlayer->posY = player_global_y + bg_offset_y;
@@ -372,28 +413,8 @@ void SceneGame::execute()
 	pShadow->scaleX =
 	pShadow->scaleY = fabsf(cosf(AngToRad(pl_jump_r)))/2.0 + 0.5f;
 
-	//攻撃アニメーション
-	if (pl_attack)
-	{
-		attck_anim += 0.1;
-		if (attck_anim < 100)
-		{
-			pl_attack = false;
-			attck_anim = 0;
-		}
-		pPlayer->vtx[0].u =
-			pPlayer->vtx[2].u = 0.375f;
-		pPlayer->vtx[1].u =
-			pPlayer->vtx[3].u = 0.5f;
-
-		pPlayer->vtx[0].v =
-			pPlayer->vtx[1].v = 0.75f;
-		pPlayer->vtx[2].v =
-			pPlayer->vtx[3].v = 0.875;
-	}
-
-	//武器のアニメーション
 	/*
+	//武器のアニメーション
 	pWeapon->posX = pPlayer->posX + cosf(AngToRad(pl_weapon_rot)) * PL_WEAPON_OFS;
 	pWeapon->posY = pPlayer->posY + sinf(AngToRad(pl_weapon_rot)) * PL_WEAPON_OFS + 25;
 	pWeapon->rot = AngToRad(pl_weapon_rot);

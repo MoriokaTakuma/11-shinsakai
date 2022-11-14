@@ -1,16 +1,18 @@
 ﻿  SceneGame.cpp
-C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(88,12): warning C4244: '引数': 'time_t' から 'unsigned int' への変換です。データが失われる可能性があります。
-C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(105,34): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(155,30): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(90,12): warning C4244: '引数': 'time_t' から 'unsigned int' への変換です。データが失われる可能性があります。
+C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(107,34): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
 C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(157,30): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(282,30): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(373,57): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(378,20): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
-C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(555,28): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(569,68): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(571,34): warning C4305: '=': 'double' から 'float' へ切り詰めます。
-C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(608,14): warning C4552: '-': 式の結果が使用されていません
-C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(619,38): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(625,36): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(632,22): warning C4244: 'return': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(159,30): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(309,30): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(321,31): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(324,64): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(326,66): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(414,57): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(576,28): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(590,68): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(592,34): warning C4305: '=': 'double' から 'float' へ切り詰めます。
+C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(629,14): warning C4552: '-': 式の結果が使用されていません
+C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(640,38): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(646,36): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\public\scene\SceneGame.cpp(653,22): warning C4244: 'return': 'double' から 'float' への変換です。データが失われる可能性があります。
   vn_framework_2021.vcxproj -> C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\x64\Debug\vn_framework_2021.exe
