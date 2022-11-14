@@ -273,6 +273,7 @@ void SceneGame::execute()
 		if (!pl_attack)  //   攻撃アニメーション	 テスト
 		{
 			pl_attack = true;
+			attck_anim = 0;
 			/*
 			if (pPlayer->scaleX > 0.0f)
 			{
@@ -288,19 +289,7 @@ void SceneGame::execute()
 			pAttackSE->play();
 		}
 	}
-	if (pl_attack)
-	{
-		pPlayer->vtx[0].u =                                                      //vtx[0].u = 左上のuの座標
-		pPlayer->vtx[2].u = 0.0f;    //vtx[2].u = 左下のuの座標
-		pPlayer->vtx[1].u =                                                      //vtx[1].u = 右上のuの座標
-		pPlayer->vtx[3].u = 0.125f;  //vtx[3].u = 右下のuの座標
 
-		pPlayer->vtx[0].v =                                                      //vtx[0].v = 左上のvの座標      
-		pPlayer->vtx[1].v = 0.5f;    //vtx[1].v = 右上のvの座標
-		pPlayer->vtx[2].v =                                                      //vtx[2].v = 左下のvの座標
-		pPlayer->vtx[3].v = 0.625f;  //vtx[3].v = 右下のvの座標
-		pPlayer->scaleX = (float)pl_vec;
-	}
 	if (pl_vec != 0)//移動アニメーション
 	{																									   
 		pPlayer->vtx[0].u =                                                      //vtx[0].u = 左上のuの座標
@@ -386,6 +375,30 @@ void SceneGame::execute()
 
 	pBg->posX = bg_offset_x;
 	pBg->posY = bg_offset_y;
+
+	//攻撃処理
+	if (pl_attack)
+	{
+		attck_anim++;
+	
+		pPlayer->vtx[0].u =                                                      //vtx[0].u = 左上のuの座標
+		pPlayer->vtx[2].u = 0.0f + (float)(pl_anim_pat / 8 % 8 % 4) * 0.125f;    //vtx[2].u = 左下のuの座標
+		pPlayer->vtx[1].u =                                                      //vtx[1].u = 右上のuの座標
+		pPlayer->vtx[3].u = 0.125f + (float)(pl_anim_pat / 8 % 8 % 4) * 0.125f;  //vtx[3].u = 右下のuの座標
+
+		pPlayer->vtx[0].v =                                                      //vtx[0].v = 左上のvの座標  
+		pPlayer->vtx[1].v = 0.5f + (float)(pl_anim_pat / 8 % 8 % 4) + 0.125f;;    //vtx[1].v = 右上のvの座標
+		pPlayer->vtx[2].v =                                                      //vtx[2].v = 左下のvの座標
+		pPlayer->vtx[3].v = 0.625f + (float)(pl_anim_pat / 8 % 8 % 4) + 0.125f;  //vtx[3].v = 右下のvの座標
+
+		if (attck_anim <= 100)
+		{
+			pl_attack = false;
+			attck_anim = 0;
+		}
+
+		pPlayer->scaleX = (float)pl_vec;
+	}
 	//ジャンプ処理
 	if (pl_jump_f)
 	{
