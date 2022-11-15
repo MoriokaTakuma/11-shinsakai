@@ -11,6 +11,7 @@ class SceneGame : public vnScene
 {
 private:
 	vnSprite* pBg;
+	vnSprite* pObj;
 	vnSprite* pPlayer;
 	vnSprite* pEnemy[ENEMY_NUM];
 	vnSprite* pItem[ITEM_NUM];

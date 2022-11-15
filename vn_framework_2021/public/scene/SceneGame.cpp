@@ -50,6 +50,9 @@ int attck_count = 2;
 int pl_weapon_rot;
 int pl_weapon_rot_add;
 
+//オブジェクト関係
+int obj_offset_y = 470;
+
 //エネミー関連
 #define EN_SHADOW_OFS	30.0f
 
@@ -118,6 +121,7 @@ bool SceneGame::initialize()
 	pPause->setRenderEnable(false);
 	pWeapon = new vnSprite(player_global_x, (float)SCREEN_CENTER_Y, 64.0f,32.0f,L"data/image/weapon.png", 0.0f, 0.1f, 0.5f, 0.6f);
 	pWeapon->setRenderPriority(pPlayer->getRenderPriority() + 1);
+	pObj = new vnSprite(SCREEN_CENTER_X, obj_offset_y, 512.0f, 512.0f, L"data/image/5.png");
 
 	//BGM・SE
 	pAttackSE = new vnSound(L"data/sound/attack.wav");
@@ -137,6 +141,7 @@ bool SceneGame::initialize()
 	registerObject(pPauseBlack);
 	registerObject(pPause);
 	registerObject(pWeapon);
+	registerObject(pObj);
 
 	//敵の種類番号が2であれば、最初は非行動・非表示
 	for (int i = 0; i < ENEMY_NUM; i++)
@@ -175,6 +180,7 @@ void SceneGame::terminate()
 	{deleteObject(pHp[i]);}
 	deleteObject(pShadow);
 	deleteObject(pWeapon);
+	deleteObject(pObj);
 
 	//BGM・SE
 	delete pBGM;
