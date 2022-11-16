@@ -126,8 +126,8 @@ bool SceneGame::initialize()
 	pWeapon->setRenderPriority(pPlayer->getRenderPriority() + 1);
 
 	//BGM・SE
-	pAttackSE = new vnSound(L"data/sound/attack.wav");
-	pBGM = new vnSound(L"data/sound/BGM.wav");
+	//pAttackSE = new vnSound(L"data/sound/attack.wav");
+	//pBGM = new vnSound(L"data/sound/BGM.wav");
 	
 
 	//作成したスプライトを基底クラス（vnSceneクラス）に登録
