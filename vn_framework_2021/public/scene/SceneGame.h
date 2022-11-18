@@ -6,6 +6,7 @@
 #define ITEM_NUM	3
 
 #define PL_HP_NUM	5
+#define pl_tama_num 5
 
 class SceneGame : public vnScene
 {
@@ -14,6 +15,7 @@ private:
 	vnSprite* pPlayer;
 	vnSprite* pEnemy[ENEMY_NUM];
 	vnSprite* pItem[ITEM_NUM];
+	vnSprite* pitem2;
 	vnSprite* pHp[PL_HP_NUM];
 	vnSprite* pShadow;
 	vnSprite* pPause;
@@ -21,6 +23,7 @@ private:
 	vnSprite* pWeapon;
 	vnSprite* pGauge;
 	vnSprite* pGaugeShitaji;
+	vnSprite* pYa[pl_tama_num];
 
 	//BGMÅESE
 	vnSound* pBGM;

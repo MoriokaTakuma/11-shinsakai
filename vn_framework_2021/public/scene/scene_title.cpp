@@ -27,6 +27,7 @@ void SceneTitle::execute()
 	//ƒL[“ü—Í
 	if (vnKeyboard::trg(DIK_SPACE))
 	{
+		pBgm_t->stop();
 		switchScene(eSceneTable::ActionGame);
 	}
 	vnScene::execute();

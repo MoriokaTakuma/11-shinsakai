@@ -19,10 +19,8 @@ float bg_offset_y;
 //PLAYER関連
 #define PL_MOVE_LIMIT_U 100.0f
 #define PL_MOVE_LIMIT_D 650.0f
-#define PL_DASH_MAX		15.0f
 #define PL_MOVE_X_SPD   5.0f
 #define PL_MOVE_Y_SPD   (PL_MOVE_X_SPD/2.0f)
-#define PL_DASH_SPD     0.2
 #define PL_JUMP_SPD     5.0f
 #define PL_JUMP_HIGHT   100.0f
 #define PL_HP_MAX		(PL_HP_NUM * 2)
@@ -85,9 +83,7 @@ int   item_type    [ITEM_NUM];
 #define HP_POS_X_DIS	60
 #define HP_POS_Y		50
 //アイテムの初期位置
-float item_init_pos[ITEM_NUM][3] = {{1300.0f,650.0f,0},
-									{1800.0f,650.0f,0},
-									{2300.0f,650.0f,0}};
+float item_init_pos[ITEM_NUM][1] = {1300.0f,650.0f,0};
 
 //PAUSE関連
 bool game_pause_f;
@@ -119,9 +115,15 @@ bool SceneGame::initialize()
 		pEnemy[i]->setRenderPriority(GameSpritePri::PRIO_ENEMY_BACK);
 	}
 	for (int i = 0; i < ITEM_NUM; i++)
-	{pItem[i] = new vnSprite(item_global_x[i], item_global_y[i], 64.0f, 64.0f, L"data/image/number_icon.png", 0.0f, 0.25f, 0.0f, 0.25);}
+	{pItem[i] = new vnSprite(item_global_x[i], item_global_y[i], 64.0f, 64.0f, L"data/image/yumi.png", 0.0f, 1.0f, 0.0f, 1.0f);}
 	for (int i = 0; i < PL_HP_NUM; i++)
 	{pHp[i] = new vnSprite(HP_POS_X + HP_POS_X_DIS * i,HP_POS_Y, 64.0f, 64.0f, L"data/image/item.png", 0.4f, 0.5f, 0.5f, 0.75);}
+	for (int i = 0; i < pl_tama_num; i++)
+	{
+		pYa[i] = new vnSprite(0.0f, 0.0f, 64.0f, 64.0f, L"data/image/arrow.png");
+		pYa[i]->setExecuteEnable(false);
+		pYa[i]->setRenderEnable(false);
+	}
 	pShadow = new vnSprite(player_global_x, (float)SCREEN_CENTER_X + PL_SHADOW_OFS, 64.0f, 64.0f, L"data/image/shadow.png");
 	pPauseBlack = new vnSprite(SCREEN_CENTER_X, SCREEN_CENTER_Y, CLIENT_WIDTH, CLIENT_HEIGHT, L"data/image/black.png");
 	pPauseBlack->setRenderPriority(GameSpritePri::PRIO_ENEMY_PAUSE);
@@ -136,7 +138,6 @@ bool SceneGame::initialize()
 	
 
 	//BGM・SE
-
 	pAttackSE = new vnSound(L"data/sound/attack.wav");
 	pBGM = new vnSound(L"data/sound/65_Drunk.wav");
 
@@ -155,6 +156,8 @@ bool SceneGame::initialize()
 	registerObject(pPause);
 	registerObject(pGaugeShitaji);
 	registerObject(pGauge);
+	for(int i = 0;i<pl_tama_num;i++)
+	{registerObject(pYa[i]);}
 	
 
 	//敵の種類番号が2であれば、最初は非行動・非表示
@@ -195,7 +198,8 @@ void SceneGame::terminate()
 	deleteObject(pShadow);
 	deleteObject(pGaugeShitaji);
 	deleteObject(pGauge);
-	
+	for (int i = 0; i < pl_tama_num; i++)
+	{deleteObject(pYa[i]);}
 	//BGM・SE
 	delete pBGM;
 	delete pAttackSE;
@@ -332,7 +336,7 @@ void SceneGame::execute()
 	
 	if (vnKeyboard::trg(DIK_F))
 	{
-		if (!pl_attack)  //   攻撃アニメーション	 テスト
+		if (!pl_attack)  //   攻撃アニメーション	 
 		{
 			pl_attack = true;
 			pAttackSE->play();
@@ -357,6 +361,7 @@ void SceneGame::execute()
 			pPlayer->vtx[1].v = 0.0f + (float)(attck_anim / 8 % 8 % 4) + 0.125f;;   //vtx[1].v = 右上のvの座標
 			pPlayer->vtx[2].v =                                                     //vtx[2].v = 左下のvの座標
 			pPlayer->vtx[3].v = 0.125f + (float)(attck_anim / 8 % 8 % 4) + 0.125f;  //vtx[3].v = 右下のvの座標
+
 			if (attck_anim > 30)
 			{
 				pl_attack = false;
@@ -394,6 +399,16 @@ void SceneGame::execute()
 			{
 				pl_attack = false;
 				attck_anim = 0;
+			}
+			for (int i = 0; i < pl_tama_num; i++)
+			{
+				if (!pYa[i]->isExecuteEnable())
+				{
+					pYa[i]->setExecuteEnable(true);
+					pYa[i]->setRenderEnable(true);
+					pYa[i]->posX = pPlayer->posX;
+					pYa[i]->posY = pPlayer->posY;
+				}
 			}
 		}
 		else//立ち絵
@@ -438,8 +453,6 @@ void SceneGame::execute()
 			pPlayer->scaleX = (float)pl_vec;
 		}
 	}
-
-
 	pl_anim_pat++;
 
 	//ワールド座標で左右の端を超えた際の処理
@@ -456,6 +469,22 @@ void SceneGame::execute()
 	if (player_global_y < PL_MOVE_LIMIT_U) { player_global_y = PL_MOVE_LIMIT_U ;}
 	if (player_global_y > PL_MOVE_LIMIT_D) { player_global_y = PL_MOVE_LIMIT_D; }
 	
+	for (int i = 0; i < pl_tama_num; i++)
+	{
+		if (pYa[i]->isExecuteEnable())
+		{
+			pYa[i]->posX += 10;
+			pYa[i]->posY += 0.1;
+		
+			if(pYa[i]->posX > CLIENT_WIDTH || pYa[i]->posX < 0 || pYa[i]->posY < 0 || pYa[i]->posY > 700)
+			{
+				pYa[i]->setExecuteEnable(false);
+				pYa[i]->setRenderEnable(false);
+			}
+		}
+	}
+	
+
 
 	float tmp_pl_pos_x = player_global_x + bg_offset_x - pBg->sizeX / 2.0f;
 	float tmp_pl_pos_y = player_global_y + bg_offset_y;
@@ -580,7 +609,7 @@ void SceneGame::execute()
 	}
 
 	//プレイヤーの攻撃と敵の当たり判定
-	/*
+	/* */
 	if (pl_attack)
 	{
 		for (int i = 0; i < ENEMY_NUM; i++)
@@ -622,8 +651,6 @@ void SceneGame::execute()
 			pPlayer->setRenderEnable(true);
 		}
 	}
-    */
-
 
 	//プレイヤーとアイテムの当たり判定
 	for (int i = 0; i < ITEM_NUM; i++)
