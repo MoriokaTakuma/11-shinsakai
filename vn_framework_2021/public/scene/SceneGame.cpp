@@ -786,6 +786,7 @@ void GameInit()
 	pl_weapon_rot = 0;
 	pl_weapon_rot_add = 0;
 	pl_attack = false;
+	pl_mode = 0;
 
 	for (int i = 0; i < ENEMY_NUM; i++)
 	{
