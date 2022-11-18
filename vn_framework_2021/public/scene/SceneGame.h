@@ -19,6 +19,8 @@ private:
 	vnSprite* pPause;
 	vnSprite* pPauseBlack;
 	vnSprite* pWeapon;
+	vnSprite* pGauge;
+	vnSprite* pGaugeShitaji;
 
 	//BGMÅESE
 	vnSound* pBGM;

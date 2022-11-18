@@ -3,7 +3,8 @@ class SceneTitle : public vnScene
 {
 private:
 	vnSprite* pTitle;
-
+	//BGMESE
+	vnSound* pBgm_t;
 public:
 	//‰Šú‰»
 	bool initialize();
