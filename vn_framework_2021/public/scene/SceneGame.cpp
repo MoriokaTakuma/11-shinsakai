@@ -41,8 +41,9 @@ int   pl_hp;
 int   pl_stamina_Max = 100;
 int   pl_stamina = pl_stamina_Max;
 int   pl_stamina_kanri = 0;
-int attck_anim;
-int  pl_tukare_anim;
+int   attck_anim;
+int   pl_tukare_anim;
+int   pl_dead_anim;
 
 //プレイヤー状態
 bool  pl_attack;
@@ -50,6 +51,7 @@ bool  pl_jump_f;
 bool  pl_muteki_f;
 bool  pl_dash;
 bool  pl_tukare;
+bool  pl_dead;
 int   pl_mode;
 
 //武器関係
@@ -77,13 +79,16 @@ float enemy_init_pos[ENEMY_NUM][3] = {{1000.0f,650.0f,0},
 float item_global_x[ITEM_NUM];
 float item_global_y[ITEM_NUM];
 int   item_type    [ITEM_NUM];
-
+float ya_global_x[pl_tama_num];
+float ya_global_y[pl_tama_num];
 //HP関連
 #define HP_POS_X	    1000
 #define HP_POS_X_DIS	60
 #define HP_POS_Y		50
 //アイテムの初期位置
-float item_init_pos[ITEM_NUM][1] = {1300.0f,650.0f,0};
+float item_init_pos[ITEM_NUM][3] = { {300.0f,650.0f,0},
+									 {1300.0f,650.0f,1},
+									 {1800.0f,650.0f,2}};
 
 //PAUSE関連
 bool game_pause_f;
@@ -120,7 +125,7 @@ bool SceneGame::initialize()
 	{pHp[i] = new vnSprite(HP_POS_X + HP_POS_X_DIS * i,HP_POS_Y, 64.0f, 64.0f, L"data/image/item.png", 0.4f, 0.5f, 0.5f, 0.75);}
 	for (int i = 0; i < pl_tama_num; i++)
 	{
-		pYa[i] = new vnSprite(0.0f, 0.0f, 64.0f, 64.0f, L"data/image/arrow.png");
+		pYa[i] = new vnSprite(ya_global_x[i], ya_global_y[i], 64.0f, 64.0f, L"data/image/arrow.png");
 		pYa[i]->setExecuteEnable(false);
 		pYa[i]->setRenderEnable(false);
 	}
@@ -209,6 +214,7 @@ void SceneGame::terminate()
 void SceneGame::execute()
 {
 	//デバッグ用
+	vnFont::print(10, 50, L"Player(Vec) : (%d)", pl_vec);
 	vnFont::print(10, 70, L"Player(Pos) : (%.3f, %.3f)", pPlayer->posX, pPlayer->posY);
 	vnFont::print(10, 110, L"attack_anim : %d", attck_anim);
 	vnFont::print(10, 130, L"pl_attack:%d", pl_attack);
@@ -216,7 +222,7 @@ void SceneGame::execute()
 	vnFont::print(10, 170, L"pl_mode:%d", pl_mode);
 	vnFont::print(10, 190, L"pl_stamina:%d", pl_stamina);
 	vnFont::print(10, 210, L"pl_tukare:%d", pl_tukare);
-	vnFont::print(10, 230, L"pl_tukare_anim:%d", pl_tukare_anim);
+	vnFont::print(10, 230, L"pl_dead_anim:%d", pl_dead_anim);
 	//BGM処理
 	if (pBGM->isStopped()) { pBGM->play(); }
 
@@ -284,6 +290,31 @@ void SceneGame::execute()
 
 	}
 	if (pl_tukare) return; //もし疲れ状態なら処理を止める。
+
+		//ゲームオーバー
+	if (pl_dead)
+	{
+		pl_dead_anim++;
+
+		pPlayer->vtx[0].u =                                                      //vtx[0].u = 左上のuの座標
+		pPlayer->vtx[2].u = 0.0f + (float)(pl_dead_anim / 16 % 16 % 8) * 0.125f;    //vtx[2].u = 左下のuの座標
+		pPlayer->vtx[1].u =                                                      //vtx[1].u = 右上のuの座標
+		pPlayer->vtx[3].u = 0.125f + (float)(pl_dead_anim / 16 % 16 % 8) * 0.125;   //vtx[3].u = 右下のuの座標
+
+		pPlayer->vtx[0].v =                                                      //vtx[0].v = 左上のvの座標      
+		pPlayer->vtx[1].v = 0.125f + (float)(pl_dead_anim / 16 % 16 % 8) + 0.125f;  //vtx[1].v = 右上のvの座標
+		pPlayer->vtx[2].v =                                                      //vtx[2].v = 左下のvの座標
+		pPlayer->vtx[3].v = 0.25f + (float)(pl_dead_anim / 16 % 16 % 8) + 0.125f;    //vtx[3].v = 右下のvの座標
+		//pPlayer->scaleX = (float)pl_vec;
+
+		if (pl_dead_anim > 125)
+		{
+			pl_dead = false;
+			pl_dead_anim = 0;
+			switchScene(eSceneTable::GameOver);
+		}
+	}
+	if (pl_dead) return; //もしdead状態なら処理を止める。
 	//移動関連
 	pl_vec = 0;
 	if (vnKeyboard::on(DIK_A))
@@ -361,7 +392,6 @@ void SceneGame::execute()
 			pPlayer->vtx[1].v = 0.0f + (float)(attck_anim / 8 % 8 % 4) + 0.125f;;   //vtx[1].v = 右上のvの座標
 			pPlayer->vtx[2].v =                                                     //vtx[2].v = 左下のvの座標
 			pPlayer->vtx[3].v = 0.125f + (float)(attck_anim / 8 % 8 % 4) + 0.125f;  //vtx[3].v = 右下のvの座標
-
 			if (attck_anim > 30)
 			{
 				pl_attack = false;
@@ -382,10 +412,11 @@ void SceneGame::execute()
 		}
 		break;
 	case 1:
+
 		if (pl_attack)
 		{
 			attck_anim++;
-
+			
 			pPlayer->vtx[0].u =                                                     //vtx[0].u = 左上のuの座標
 			pPlayer->vtx[2].u = 0.5f + (float)(attck_anim / 8 % 8 % 4) * 0.125f;    //vtx[2].u = 左下のuの座標
 			pPlayer->vtx[1].u =                                                     //vtx[1].u = 右上のuの座標
@@ -406,8 +437,8 @@ void SceneGame::execute()
 				{
 					pYa[i]->setExecuteEnable(true);
 					pYa[i]->setRenderEnable(true);
-					pYa[i]->posX = pPlayer->posX;
-					pYa[i]->posY = pPlayer->posY;
+					ya_global_x[i] = player_global_x;
+					ya_global_y[i] = player_global_y;
 				}
 			}
 		}
@@ -423,11 +454,32 @@ void SceneGame::execute()
 			pPlayer->vtx[2].v =
 			pPlayer->vtx[3].v = 0.625;
 		}
+		break;
+	}
+
+	//矢処理
+	for (int i = 0; i < pl_tama_num; i++)
+	{
+		if (pYa[i]->isExecuteEnable())
+		{
+			ya_global_x[i] += 10;
+			ya_global_y[i] += 0.5;
+			
+			if (ya_global_x[i] > 2500 || ya_global_x[i] < 0 || ya_global_y[i] < 0 || ya_global_y[i] > 700)
+			{
+				pYa[i]->setExecuteEnable(false);
+				pYa[i]->setRenderEnable(false);
+			}
+		}
+
+		pYa[i]->posX = ya_global_x[i] + bg_offset_x - pBg->sizeX / 2.0f;
+		pYa[i]->posY = ya_global_y[i];
 	}
 	
 	/**/
 
-	if (pl_vec != 0)//移動アニメーション
+	//移動アニメーション
+	if (pl_vec != 0)
 	{																									   
 		pPlayer->vtx[0].u =                                                      //vtx[0].u = 左上のuの座標
 	    pPlayer->vtx[2].u = 0.0f + (float)(pl_anim_pat / 8 % 8 % 8) * 0.125f;    //vtx[2].u = 左下のuの座標
@@ -469,22 +521,6 @@ void SceneGame::execute()
 	if (player_global_y < PL_MOVE_LIMIT_U) { player_global_y = PL_MOVE_LIMIT_U ;}
 	if (player_global_y > PL_MOVE_LIMIT_D) { player_global_y = PL_MOVE_LIMIT_D; }
 	
-	for (int i = 0; i < pl_tama_num; i++)
-	{
-		if (pYa[i]->isExecuteEnable())
-		{
-			pYa[i]->posX += 10;
-			pYa[i]->posY += 0.1;
-		
-			if(pYa[i]->posX > CLIENT_WIDTH || pYa[i]->posX < 0 || pYa[i]->posY < 0 || pYa[i]->posY > 700)
-			{
-				pYa[i]->setExecuteEnable(false);
-				pYa[i]->setRenderEnable(false);
-			}
-		}
-	}
-	
-
 
 	float tmp_pl_pos_x = player_global_x + bg_offset_x - pBg->sizeX / 2.0f;
 	float tmp_pl_pos_y = player_global_y + bg_offset_y;
@@ -601,6 +637,7 @@ void SceneGame::execute()
 		pEnemy[i]->posY = enemy_global_y[i];
 	}
 
+
 	//アイテム位置更新(仮)
 	for (int i = 0; i < ITEM_NUM; i++)
 	{
@@ -608,8 +645,23 @@ void SceneGame::execute()
 		pItem[i]->posY = item_global_y[i];
 	}
 
+	/**/
+	//矢と敵の当たり判定
+	for (int i = 0; i < pl_tama_num; i++)
+	{
+		if (!pEnemy[i]->isExecuteEnable())continue;
+		if (HitCheck(ya_global_x[i], ya_global_y[i], enemy_global_x[i], enemy_global_y[i], HIT_DISTANCE_X, HIT_DISTANCE_Y))
+		{
+			pEnemy[i]->setExecuteEnable(false);
+			pEnemy[i]->setRenderEnable(false);
+			pYa[i]->setExecuteEnable(false);
+			pYa[i]->setRenderEnable(false);
+		}
+		
+	}
+	 
 	//プレイヤーの攻撃と敵の当たり判定
-	/* */
+	
 	if (pl_attack)
 	{
 		for (int i = 0; i < ENEMY_NUM; i++)
@@ -636,13 +688,13 @@ void SceneGame::execute()
 				pl_muteki_f = true;
 				pl_muteki_cnt = 150;
 				pl_hp--;
-				if (pl_hp <= 0) { switchScene(eSceneTable::GameOver); }
+				if (pl_hp <= 0) { pl_dead = true; }
 			}
 		}
 	}
 	else
 	{
-		pPlayer->setRenderEnable((bool)(pl_muteki_cnt / 4 % 2));
+		pPlayer->setRenderEnable((bool)(pl_muteki_cnt / 8 % 2));
 		pl_muteki_cnt--;
 		if (pl_muteki_cnt <= 0)
 		{
@@ -651,7 +703,7 @@ void SceneGame::execute()
 			pPlayer->setRenderEnable(true);
 		}
 	}
-
+	
 	//プレイヤーとアイテムの当たり判定
 	for (int i = 0; i < ITEM_NUM; i++)
 	{
@@ -660,9 +712,11 @@ void SceneGame::execute()
 		{
 			pItem[i]->setRenderEnable(false);
 			pItem[i]->setExecuteEnable(false);
-			pl_hp += 2;
-			pl_mode++;
-			if (pl_hp > PL_HP_MAX)pl_hp = PL_HP_MAX;
+			if(pl_mode != 1)
+			{
+				pl_mode++;
+			}
+			//if (pl_hp > PL_HP_MAX)pl_hp = PL_HP_MAX;
 		}
 	}
 	for (int i = 0; i < PL_HP_MAX / 2; i++)
@@ -680,7 +734,6 @@ void SceneGame::execute()
 			pHp[i]->setRenderEnable(false);
 		}
 	}
-    
 
 	//ハートを半分消す
 	if (pl_hp % 2 != 0)
@@ -691,6 +744,7 @@ void SceneGame::execute()
 		pHp[pl_hp / 2]->vtx[1].u = 0.45f;
 		pHp[pl_hp / 2]->vtx[3].u = 0.45;
 	}
+
 	//クリア条件	
 	bool enemy_clear = true;
 	for (int i = 0; i < ENEMY_NUM; i++)
