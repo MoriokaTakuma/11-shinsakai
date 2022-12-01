@@ -2,15 +2,15 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\守丘　拓真\Desktop\11-shinsakai\x64\Debug\vn_framework_2021.exe</FullPath>
+      <FullPath>C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\x64\Debug\vn_framework_2021.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\守丘　拓真\Desktop\11-shinsakai\vn_framework_2021\shader\ps_2d.cso</FullPath>
+      <FullPath>C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\shader\ps_2d.cso</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\守丘　拓真\Desktop\11-shinsakai\vn_framework_2021\shader\vs_2d.cso</FullPath>
+      <FullPath>C:\Users\takum\Desktop\vn_framework_2021\vn_framework_2021\vn_framework_2021\shader\vs_2d.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

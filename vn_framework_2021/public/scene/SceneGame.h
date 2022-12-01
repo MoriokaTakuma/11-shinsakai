@@ -4,6 +4,7 @@
 #define ENEMY_TYPE_NUM 3
 
 #define ITEM_NUM	3
+#define ITEM2_NUM   3
 
 #define PL_HP_NUM	5
 #define pl_tama_num 5
@@ -15,7 +16,8 @@ private:
 	vnSprite* pPlayer;
 	vnSprite* pEnemy[ENEMY_NUM];
 	vnSprite* pItem[ITEM_NUM];
-	vnSprite* pitem2;
+	vnSprite* pItem2[ITEM2_NUM];
+	vnSprite* pItem3;
 	vnSprite* pHp[PL_HP_NUM];
 	vnSprite* pShadow;
 	vnSprite* pPause;

@@ -79,8 +79,14 @@ float enemy_init_pos[ENEMY_NUM][3] = {{1000.0f,650.0f,0},
 float item_global_x[ITEM_NUM];
 float item_global_y[ITEM_NUM];
 int   item_type    [ITEM_NUM];
+float item2_global_x[ITEM2_NUM];
+float item2_global_y[ITEM2_NUM];
+int   item2_type[ITEM2_NUM];
+float item3_global_x = SCREEN_CENTER_X;
+float item3_global_y = 650.0f;
 float ya_global_x[pl_tama_num];
 float ya_global_y[pl_tama_num];
+bool key;
 //HP関連
 #define HP_POS_X	    1000
 #define HP_POS_X_DIS	60
@@ -90,6 +96,9 @@ float item_init_pos[ITEM_NUM][3] = { {300.0f,650.0f,0},
 									 {1300.0f,650.0f,1},
 									 {1800.0f,650.0f,2}};
 
+float item2_init_pos[ITEM_NUM][3] = { {400.0f,650.0f,0},
+									 {1400.0f,650.0f,1},
+									 {1900.0f,650.0f,2}};
 //PAUSE関連
 bool game_pause_f;
 
@@ -121,6 +130,11 @@ bool SceneGame::initialize()
 	}
 	for (int i = 0; i < ITEM_NUM; i++)
 	{pItem[i] = new vnSprite(item_global_x[i], item_global_y[i], 64.0f, 64.0f, L"data/image/yumi.png", 0.0f, 1.0f, 0.0f, 1.0f);}
+	for (int i = 0; i < ITEM2_NUM; i++)
+	{
+		pItem2[i] = new vnSprite(item2_global_x[i], item2_global_y[i], 64.0f, 64.0f, L"data/image/item.png", 0.7f, 0.8f, 0.5f, 0.75f);
+	}
+	pItem3 = new vnSprite(item3_global_x, item3_global_y, 64.0f, 64.0f, L"data/image/key.png", 0.0f, 1.0f, 0.0f, 1.0f);
 	for (int i = 0; i < PL_HP_NUM; i++)
 	{pHp[i] = new vnSprite(HP_POS_X + HP_POS_X_DIS * i,HP_POS_Y, 64.0f, 64.0f, L"data/image/item.png", 0.4f, 0.5f, 0.5f, 0.75);}
 	for (int i = 0; i < pl_tama_num; i++)
@@ -154,6 +168,11 @@ bool SceneGame::initialize()
 	{registerObject(pEnemy[i]);}
 	for (int i = 0; i < ITEM_NUM; i++)
 	{registerObject(pItem[i]);}
+	for (int i = 0; i < ITEM2_NUM; i++)
+	{
+		registerObject(pItem2[i]);
+	}
+	registerObject(pItem3);
 	for (int i = 0; i < PL_HP_NUM; i++)
 	{registerObject(pHp[i]);}
 	registerObject(pShadow);
@@ -198,6 +217,11 @@ void SceneGame::terminate()
 	{deleteObject(pEnemy[i]);}
 	for (int i = 0; i < ITEM_NUM; i++)
 	{deleteObject(pItem[i]);}
+	for (int i = 0; i < ITEM2_NUM; i++)
+	{
+		deleteObject(pItem2[i]);
+	}
+	deleteObject(pItem3);
 	for (int i = 0; i < PL_HP_NUM; i++)
 	{deleteObject(pHp[i]);}
 	deleteObject(pShadow);
@@ -213,6 +237,7 @@ void SceneGame::terminate()
 //処理関数
 void SceneGame::execute()
 {
+	/*
 	//デバッグ用
 	vnFont::print(10, 50, L"Player(Vec) : (%d)", pl_vec);
 	vnFont::print(10, 70, L"Player(Pos) : (%.3f, %.3f)", pPlayer->posX, pPlayer->posY);
@@ -223,6 +248,22 @@ void SceneGame::execute()
 	vnFont::print(10, 190, L"pl_stamina:%d", pl_stamina);
 	vnFont::print(10, 210, L"pl_tukare:%d", pl_tukare);
 	vnFont::print(10, 230, L"pl_dead_anim:%d", pl_dead_anim);
+    */
+
+	//画面遷移
+	if (vnKeyboard::trg(DIK_Q))
+	{
+		switchScene(eSceneTable::GameClear);
+	}
+	if (vnKeyboard::trg(DIK_E))
+	{
+		switchScene(eSceneTable::GameOver);
+	}
+	if (vnKeyboard::on(DIK_B))
+	{
+		switchScene(eSceneTable::Boot);
+	}
+
 	//BGM処理
 	if (pBGM->isStopped()) { pBGM->play(); }
 
@@ -244,20 +285,6 @@ void SceneGame::execute()
 	}
 
 	if (game_pause_f) return; //もしgame_pause_f状態なら処理を止める。
-
-		//画面遷移
-	if (vnKeyboard::trg(DIK_Q))
-	{
-		switchScene(eSceneTable::GameClear);
-	}
-	if (vnKeyboard::trg(DIK_E))
-	{
-		switchScene(eSceneTable::GameOver);
-	}
-	if (vnKeyboard::on(DIK_B))
-	{
-		switchScene(eSceneTable::Boot);
-	}
 
 
 	//スタミナゲージ
@@ -314,7 +341,9 @@ void SceneGame::execute()
 			switchScene(eSceneTable::GameOver);
 		}
 	}
+
 	if (pl_dead) return; //もしdead状態なら処理を止める。
+
 	//移動関連
 	pl_vec = 0;
 	if (vnKeyboard::on(DIK_A))
@@ -645,6 +674,15 @@ void SceneGame::execute()
 		pItem[i]->posY = item_global_y[i];
 	}
 
+	for (int i = 0; i < ITEM2_NUM; i++)
+	{
+		pItem2[i]->posX = item2_global_x[i] + bg_offset_x - pBg->sizeX / 2.0f;
+		pItem2[i]->posY = item2_global_y[i];
+	}
+
+	pItem3->posX = item3_global_x + bg_offset_x - pBg->sizeX / 2.0f;
+	pItem3->posY = item3_global_y;
+
 	/**/
 	//矢と敵の当たり判定
 	for (int i = 0; i < pl_tama_num; i++)
@@ -716,8 +754,29 @@ void SceneGame::execute()
 			{
 				pl_mode++;
 			}
-			//if (pl_hp > PL_HP_MAX)pl_hp = PL_HP_MAX;
 		}
+	}
+	for (int i = 0; i < ITEM_NUM; i++)
+	{
+		if (!pItem2[i]->isExecuteEnable())continue;
+		if (HitCheck(player_global_x, player_global_y, item2_global_x[i], item2_global_y[i], HIT_DISTANCE_X, HIT_DISTANCE_Y))
+		{
+			pItem2[i]->setRenderEnable(false);
+			pItem2[i]->setExecuteEnable(false);
+			if (pl_hp != 5)
+			{
+				pl_hp++;
+			}
+			if (pl_hp > PL_HP_MAX)pl_hp = PL_HP_MAX;
+		}
+	}
+	if (!pItem3->isExecuteEnable())
+	if (HitCheck(player_global_x, player_global_y, item3_global_x, item3_global_y, HIT_DISTANCE_X, HIT_DISTANCE_Y))
+	{
+		pItem3->setRenderEnable(false);
+		pItem3->setExecuteEnable(false);
+
+		key = true;
 	}
 	for (int i = 0; i < PL_HP_MAX / 2; i++)
 	{
@@ -786,6 +845,7 @@ void GameInit()
 	pl_weapon_rot = 0;
 	pl_weapon_rot_add = 0;
 	pl_attack = false;
+	pl_mode = 0;
 
 	for (int i = 0; i < ENEMY_NUM; i++)
 	{
@@ -799,7 +859,12 @@ void GameInit()
 		item_global_y[i] = item_init_pos[i][1];
 		item_type[i] = item_init_pos[i][2];
 	}
-	
+	for (int i = 0; i < ITEM2_NUM; i++)
+	{
+		item2_global_x[i] = item2_init_pos[i][0];
+		item2_global_y[i] = item2_init_pos[i][1];
+		item2_type[i] = item2_init_pos[i][2];
+	}
 }
 
 float AngToRad(float ang)
